@@ -31,9 +31,13 @@ AUTH_ENABLED=true
 ```
 
 `PRAXIS_LOWER` and `PRAXIS_UPPER` are important as this will identify which ports for Docker to allow open, and will be used to define how many active connections it will support.
+
 `SERVE_PORT` represents where the API will be accessable from, you can easily chain this with nginx to reverse proxy it.
+
 `PROXY_URL`, `PROXY_USERNAME` and `PROXY_PASSWORD` are currently used to configure a `illuminati` based proxy. The current values are (obviously) not real.
+
 `PROXY_MODE` and `GIN_MODE` can bet set to debug to allow better debugging, obviously. In theory it's faster to not have these set.
+
 `AUTH_ENABLED` gates the authentication middlewares for the api and proxy.
 
 After setting these up correctly, performing a `docker-compose build` followed by ` docker-compose up` should be enough.

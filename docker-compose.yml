@@ -1,0 +1,29 @@
+version: '3'
+services:
+  praxis:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${SERVE_PORT}:${SERVE_PORT}"
+      - "${PRAXIS_LOWER}-${PRAXIS_UPPER}:${PRAXIS_LOWER}-${PRAXIS_UPPER}"
+    environment:
+      - REDIS_HOST=redis:6379
+      - PRAXIS_LOWER=${PRAXIS_LOWER}
+      - PRAXIS_UPPER=${PRAXIS_UPPER}
+      - SERVE_PORT=${SERVE_PORT}
+      - PROXY_URL=${PROXY_URL}
+      - PROXY_USERNAME=${PROXY_USERNAME}
+      - PROXY_PASSWORD=${PROXY_PASSWORD}
+      - GIN_MODE=${GIN_MODE}
+      - PROXY_MODE=${PROXY_MODE}
+      - AUTH_ENABLED=${AUTH_ENABLED}
+    depends_on:
+      - redis
+    restart: always
+  redis:
+    image: "redis:alpine"
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: redis
+    volumes:
+      - ./redis-data:/data
